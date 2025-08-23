@@ -1,71 +1,95 @@
-import { Link, useNavigate } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
+import React, { useState } from "react";
+import axios from "axios";
+
 
 
 export default function Login() {
-   const navigate = useNavigate();
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary to-secondary px-4">
-      <div className="bg-base-100 shadow-2xl rounded-2xl overflow-hidden flex flex-col md:flex-row w-full  max-w-4xl">
-        
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [loading, setLoading] = useState(false);
+
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        formData,
+        { withCredentials: true }
+      );
+
+      toast.success("Login successful!");
+      console.log("Access Token:", res.data.accessToken);
+
       
-        <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-secondary to-primary items-center justify-center p-10">
-          <div className="text-center text-primary-content">
-            <h2 className="text-4xl font-bold mb-4">Welcome Back 👋</h2>
-            <p className="text-lg opacity-90">
-              Login to continue chatting with your friends in real-time.
-            </p>
+      localStorage.setItem("accessToken", res.data.accessToken);
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Login failed!");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 to-indigo-200">
+      <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
+          Login to Chatkaro
+        </h2>
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Email */}
+          <div>
+            <label className="block text-gray-600 mb-1">Email</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="Enter your email"
+            />
           </div>
-        </div>
 
-     
-        <div className="w-full md:w-1/2 p-8">
-          <h2 className="text-3xl font-bold text-center mb-6">Login</h2>
-
-          <form className="space-y-5">
-          
-            <div>
-              <label className="block mb-2 font-semibold">Email</label>
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="input input-bordered w-full"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block mb-2 font-semibold">Password</label>
-              <input
-                type="password"
-                placeholder="Enter your password"
-                className="input input-bordered w-full"
-                required
-              />
-            </div>
-
-            {/* Login Button */}
-            <button className="btn btn-primary w-full" onClick={() => navigate('/register')}>Login</button>
-
-            {/* Google Login */}
-            <button
-              type="button"
-              className="btn w-full flex items-center gap-2 border border-gray-300"
-            >
-              <FcGoogle size={22} /> Login with Google
-            </button>
-          </form>
-
-          {/* Links */}
-          <div className="mt-6 flex justify-between text-sm">
-            <Link to="/forgot-password" className="hover:underline">
-              Forgot Password?
-            </Link>
-            <Link to="/register" className="hover:underline">
-              Don’t have an account? Register
-            </Link>
+          {/* Password */}
+          <div>
+            <label className="block text-gray-600 mb-1">Password</label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="Enter your password"
+            />
           </div>
-        </div>
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition duration-200"
+          >
+            {loading ? "Logging in..." : "Login"}
+          </button>
+        </form>
+
+        <p className="text-center text-sm text-gray-500 mt-4">
+          Don’t have an account?{" "}
+          <a href="/register" className="text-indigo-600 font-medium">
+            Register here
+          </a>
+        </p>
       </div>
     </div>
   );
