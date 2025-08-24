@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import axios from "axios";
+import {useNavigate} from "react-router-dom";
+import api from "../config/api";
+import { toast } from "react-hot-toast";
 
 
 
@@ -21,17 +23,12 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const res = await axios.post(
-        "http://localhost:5000/api/auth/login",
-        formData,
-        { withCredentials: true }
+      const res = await api.post(
+        "/auth/login",
+        formData
       );
 
       toast.success("Login successful!");
-      console.log("Access Token:", res.data.accessToken);
-
-      
-      localStorage.setItem("accessToken", res.data.accessToken);
     } catch (err) {
       toast.error(err.response?.data?.message || "Login failed!");
     } finally {

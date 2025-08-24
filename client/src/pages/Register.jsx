@@ -3,9 +3,14 @@ import { Link } from "react-router-dom";
 import api from "../config/api";
 import { toast } from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
+import { FcGoogle } from "react-icons/fc";
 
 
 export default function Register() {
+  const handleGoogleRegister = () => {
+    // Add Google OAuth logic here
+    toast('Google registration coming soon!');
+  }
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -38,12 +43,6 @@ export default function Register() {
       confirmPassword:"",
     })
   }
-
-
-
-
-
-
 
   
 
@@ -124,6 +123,19 @@ export default function Register() {
               Register
             </button>
           </form>
+          <div className="flex items-center gap-2 my-4">
+            <div className="flex-1 h-px bg-base-300" />
+            <span className="text-base-content/60 text-xs">OR</span>
+            <div className="flex-1 h-px bg-base-300" />
+          </div>
+          <button
+            type="button"
+            className="w-full bg-red-500 text-white py-2 rounded-lg font-semibold flex items-center justify-center gap-2 hover:bg-red-600 transition duration-300 shadow"
+            onClick={handleGoogleRegister}
+          >
+            <FcGoogle className="text-2xl" />
+            Sign up with Google
+          </button>
           <p className="mt-6 text-center text-gray-600 text-sm">
             Already have an account?{" "}
             <Link to="/login" className="text-blue-600 font-semibold hover:underline">

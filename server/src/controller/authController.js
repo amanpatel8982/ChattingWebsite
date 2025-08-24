@@ -1,12 +1,10 @@
 import User from "../model/userModel.js";
 import bcrypt from "bcrypt";
+import genToken from "../utils/auth.js";
 
 export const Register = async (req, res, next) =>{
-    try {
-
-       
-        
-   const { 
+    try { 
+      const {
          fullName,
          email,
          password
