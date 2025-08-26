@@ -32,7 +32,7 @@ export const Register = async (req, res, next) => {
       }
       await OTP.deleteOne({ email });
     } else {
-      const error = new Error("OTP Expired !!! Try Again.");
+      const error = new Error("OTP Expired !! Try Again.");
       error.statusCode = 404;
       return next(error);
     }
