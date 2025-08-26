@@ -8,7 +8,6 @@ import { FcGoogle } from "react-icons/fc";
 
 export default function Register() {
   const handleGoogleRegister = () => {
-    // Add Google OAuth logic here
     toast('Google registration coming soon!');
   }
   const [formData, setFormData] = useState({
@@ -133,7 +132,7 @@ export default function Register() {
             className="w-full bg-red-500 text-white py-2 rounded-lg font-semibold flex items-center justify-center gap-2 hover:bg-red-600 transition duration-300 shadow"
             onClick={handleGoogleRegister}
           >
-            <FcGoogle className="text-2xl" />
+            <FcGoogle className="text-2xl"  />
             Sign up with Google
           </button>
           <p className="mt-6 text-center text-gray-600 text-sm">
