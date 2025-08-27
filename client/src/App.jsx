@@ -7,6 +7,9 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Contact from "./pages/Contact.jsx";
 import { Toaster } from "react-hot-toast";
+import Dashboard from "./pages/DashBoard.jsx";
+import ChatPage from "./pages/Chatpage.jsx";
+
 
 
 const App = () => {
@@ -21,6 +24,8 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/dashboard" element={<Dashboard/>} />  
+        <Route path="/chat" element={<ChatPage />} />       <Route path="/chat" element={<ChatPage />} />
        </Routes>
     </BrowserRouter>
     </>

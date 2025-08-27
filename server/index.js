@@ -7,6 +7,7 @@ import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import AuthRouter from './src/routes/authRoute.js'
+import userRoutes from "./src/routes/userRoutes.js";
 
 
 
@@ -21,22 +22,30 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev")); 
 
-app.use("/auth", AuthRouter);
+app.use("/api/auth", AuthRouter);
+app.use("/api/user", userRoutes);
 
 
-app.get("/", (req , res) => {
-    res.json({message: "server connected"});
+
+app.get("/api", (req, res) => {
+  res.status(200).json({
+    message: "ChatApp Backend is running",
+  });
 });
 
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  const message = err.message || "Internal Server Error";
+  res.status(statusCode).json({
+    message,
+  });
+});
 
-
-
-const port = process.env.PORT || 5000
-
-app.listen(port ,  async () =>{
-    console.log("server started at ", port);
-    await connectDB();
-})
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+  connectDB();
+});
 
 
 
