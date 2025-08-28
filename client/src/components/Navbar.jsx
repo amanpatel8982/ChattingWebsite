@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { Sun, Moon } from "lucide-react";
 
 const Navbar = () => {
   const { user, isLogin } = useAuth();
@@ -9,8 +9,7 @@ const Navbar = () => {
     sessionStorage.getItem("theme") || "light"
   );
 
-  const location = useLocation().pathname.slice(1);
-  console.log(location);
+  const location = useLocation();
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", selectedTheme);
@@ -18,57 +17,72 @@ const Navbar = () => {
   }, [selectedTheme]);
 
   useEffect(() => {
-    if (location === "chat") {
-      window.scrollTo({ top: 64, behavior: "smooth" });
+    if (location.pathname.slice(1) === "chat") {
+      window.scrollTo({ top: 80, behavior: "smooth" });
     }
   }, [location]);
 
   return (
-    <>
-      <div
-        className={`${
-          location !== "chat" ? "sticky top-0 z-50" : ""
-        } bg-primary text-primary-content flex justify-between items-center px-8 py-3  transition-all duration-300`}
-      >
-        <h1 className="text-3xl font-bold">ChatApp</h1>
+    <header
+      className={`${
+        location.pathname.slice(1) !== "chat" ? "sticky top-0 z-50" : ""
+      } bg-primary text-primary-content shadow-md`}
+    >
+      <div className="max-w-7xl mx-auto flex justify-between items-center  py-5">
+        {/* Logo */}
+        <Link to="/" className="flex items-center gap-2">
+          <span className="text-5xl font-extrabold tracking-wide">ChatApp</span>
+        </Link>
 
-        <div className="flex gap-4 items-center">
-          <Link to="/">Home</Link>
-          <Link to="/about">About</Link>
-          <Link to="/contact">Contact</Link>
+        {/* Links */}
+        <nav className="flex gap-8 items-center text-lg font-medium">
+          {["Home", "About", "Contact"].map((item, idx) => (
+            <Link
+              key={idx}
+              to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+              className="relative group"
+            >
+              <span className="transition">{item}</span>
+              <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-secondary transition-all duration-300 group-hover:w-full"></span>
+            </Link>
+          ))}
 
           {isLogin && user ? (
             <>
-              <Link to="/chat">Chat</Link>
-              <Link to="/dashboard">
-                <div className="flex gap-3 items-center me-5">
-                  <img
-                    src={user.photo}
-                    alt=""
-                    className="h-8 w-8 rounded-full object-cover"
-                  />
-                  <span>{user.fullName.split(" ")[0]}</span>
-                </div>
+              <Link
+                to="/chat"
+                className="relative group"
+              >
+                <span className="transition">Chat</span>
+                <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-secondary transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+              <Link to="/dashboard" className="flex gap-3 items-center">
+                <img
+                  src={user.photo}
+                  alt="profile"
+                  className="h-10 w-10 rounded-full object-cover ring-2 ring-secondary"
+                />
+                <span className="font-semibold">{user.fullName.split(" ")[0]}</span>
               </Link>
             </>
           ) : (
-            <Link to="/login">Login</Link>
+            <Link
+              to="/login"
+              className="px-5 py-2 bg-secondary text-secondary-content rounded-xl font-semibold shadow-md hover:scale-105 transition"
+            >
+              Login
+            </Link>
           )}
 
-          <select
-            name="theme"
-            value={selectedTheme}
-            onChange={(e) => {
-              setSelectedTheme(e.target.value);
-              document.documentElement.setAttribute(
-                "data-theme",
-                e.target.value
-              );
-              sessionStorage.setItem("theme", e.target.value);
-            }}
-            className="select select-bordered w-1/3 border-secondary bg-base-100 text-base-content focus:ring focus:ring-secondary"
-          >
-            <option value="light">Light</option>
+          {/* Theme switcher */}
+          <div className="flex items-center gap-2 ml-3">
+            <select
+              name="theme"
+              value={selectedTheme}
+              onChange={(e) => setSelectedTheme(e.target.value)}
+              className="select select-bordered border-secondary bg-base-100 text-base-content w-32"
+            >
+              <option value="light">Light</option>
             <option value="dark">Dark</option>
             <option value="claude">Claude</option>
             <option value="corporate">Corporate</option>
@@ -81,10 +95,16 @@ const Navbar = () => {
             <option value="spotify">Spotify</option>
             <option value="valorant">Valorant</option>
             <option value="vscode">VS Code</option>
-          </select>
-        </div>
+            </select>
+            {selectedTheme === "light" ? (
+              <Sun className="h-6 w-6" />
+            ) : (
+              <Moon className="h-6 w-6" />
+            )}
+          </div>
+        </nav>
       </div>
-    </>
+    </header>
   );
 };
 

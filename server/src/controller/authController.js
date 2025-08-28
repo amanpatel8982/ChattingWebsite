@@ -114,6 +114,8 @@ export const Login = async (req, res, next) => {
   }
 };
 
+// ...existing code...
+
 export const SendOTPForRegister = async (req, res, next) => {
   try {
     const { fullName, email, password } = req.body;
@@ -130,6 +132,9 @@ export const SendOTPForRegister = async (req, res, next) => {
       return next(error);
     }
 
+    // Delete any previous OTP for this email
+    await OTP.deleteMany({ email });
+
     const otp = Math.floor(100000 + Math.random() * 900000);
     const hashedOtp = await bcrypt.hash(otp.toString(), 10);
     await OTP.create({
@@ -138,7 +143,6 @@ export const SendOTPForRegister = async (req, res, next) => {
     });
 
     const subject = "Verify your email";
-
     const message = `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9; border-radius: 10px;">
                 <div style="text-align: center; padding: 20px 0;">
@@ -162,7 +166,15 @@ export const SendOTPForRegister = async (req, res, next) => {
             </div>
         `;
 
-    sendEmail(email, subject, message);
+    // Await sendEmail and handle errors
+    try {
+      await sendEmail(email, subject, message);
+    } catch (err) {
+      const error = new Error("Failed to send OTP email");
+      error.statusCode = 500;
+      return next(error);
+    }
+
     res.status(200).json({
       message: "OTP sent successfully",
     });
@@ -170,6 +182,7 @@ export const SendOTPForRegister = async (req, res, next) => {
     next(error);
   }
 };
+// ...existing code...
 
 export const SendOTPForLogin = async (req, res, next) => {
   try {

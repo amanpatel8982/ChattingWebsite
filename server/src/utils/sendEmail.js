@@ -5,8 +5,8 @@ const sendEmail = async (to, subject, message) =>{
         const transporter = nodemailer.createTransport({ // transporter => Ye email bhejne ke liye Gmail ke server ka use karega.
             service: 'gmail',
             auth: { // authentication details (kaunse account se bhejna hai).
-                user: process.env.GMAIL.USER,
-                pass:process.env.GMAIL_PASSCODE, //Gmail ka App Password (normal password nahi chalega).
+                user: process.env.GMAIL_USER,
+                pass: process.env.GMAIL_PASSCODE, //Gmail ka App Password (normal password nahi chalega).
             },
         });
 
