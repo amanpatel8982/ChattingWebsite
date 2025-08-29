@@ -5,10 +5,10 @@ import Home from "./pages/Home.jsx";
 import About from "./pages/About.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
-import Contact from "./pages/Contact.jsx";
 import { Toaster } from "react-hot-toast";
 import Dashboard from "./pages/DashBoard.jsx";
 import ChatPage from "./pages/Chatpage.jsx";
+import Contact from "./pages/Contact.jsx";
 
 
 

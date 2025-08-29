@@ -20,6 +20,13 @@ const MessageSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+     deletedBy: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    }
+  ],
+    
   },
   { timestamps: true }
 );

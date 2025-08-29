@@ -44,12 +44,13 @@ const Chatting = ({ friend }) => {
       );
     }
   };
+  
 
   // ✅ Delete For Everyone
   const deleteMessageForEveryone = async (id) => {
     try {
       await api.delete(`/user/deleteMessage/${id}`);
-      setMessages((prev) => prev.filter((m) => m._id !== id));
+      setMessages((prev) => prev.filter((m) => String(m._id) !== String(id)));
       toast.success("Deleted for everyone");
     } catch (error) {
       console.error("Error deleting message:", error);
@@ -59,7 +60,7 @@ const Chatting = ({ friend }) => {
 
   // ✅ Delete For Me (Frontend Only)
   const deleteMessageForMe = (id) => {
-    setMessages((prev) => prev.filter((m) => m._id !== id));
+    setMessages((prev) => prev.filter((m) => String(m._id) !== String(id)));
     toast.success("Deleted for me");
   };
 
