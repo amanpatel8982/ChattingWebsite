@@ -14,6 +14,7 @@ import webSocket from "./src/webSocket.js";
 
 
 
+
 const app = express();
 app.use(cors({
     origin: "http://localhost:5173",
@@ -27,6 +28,7 @@ app.use(morgan("dev"));
 
 app.use("/auth", AuthRouter);
 app.use("/user", userRoutes);
+
 
 
 

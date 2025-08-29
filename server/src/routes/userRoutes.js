@@ -8,4 +8,5 @@ router.get("/allUsers", Protect, GetAllUser);
 router.post("/sendMessage/:id", Protect, SendMessage);
 router.get("/receiveMessage/:id", Protect, ReceiveMessage);
 
+
 export default router;

@@ -28,7 +28,7 @@ const Navbar = () => {
         location.pathname.slice(1) !== "chat" ? "sticky top-0 z-50" : ""
       } bg-primary text-primary-content shadow-md`}
     >
-      <div className="max-w-7xl mx-auto flex justify-between items-center  py-5">
+      <div className="max-w-7xl mx-auto flex justify-between items-center py-5">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
           <span className="text-5xl font-extrabold tracking-wide">ChatApp</span>
