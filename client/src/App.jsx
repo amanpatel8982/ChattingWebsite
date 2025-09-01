@@ -25,7 +25,8 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/dashboard" element={<Dashboard/>} />  
-        <Route path="/chat" element={<ChatPage />} />       <Route path="/chat" element={<ChatPage />} />
+        <Route path="/chat" element={<ChatPage />} />  
+        <Route path="/chat" element={<ChatPage />} />
        </Routes>
     </BrowserRouter>
     </>

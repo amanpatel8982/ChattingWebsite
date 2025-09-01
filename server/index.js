@@ -31,6 +31,7 @@ app.use("/user", userRoutes);
 
 
 
+
 app.get("/api", (req, res) => {
   res.status(200).json({
     message: "ChatApp Backend is running",

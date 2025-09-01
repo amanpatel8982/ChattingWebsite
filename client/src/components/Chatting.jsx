@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { GiHummingbird } from "react-icons/gi";
-import api from "../config/Api";
+import api from "../config/api";
 import toast from "react-hot-toast";
 import socketAPI from "../config/WebSocket";
 
