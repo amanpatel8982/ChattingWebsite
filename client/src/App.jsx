@@ -15,7 +15,7 @@ import Contact from "./pages/Contact.jsx";
 const App = () => {
   return (
     <>
-    <BrowserRouter>
+    <BrowserRouter>                                            
     <Toaster />
        <Navbar/>
        <Routes>
